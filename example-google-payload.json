@@ -1,0 +1,84 @@
+{
+  "responseId": "3e969628-cf8e-4d99-9bb3-4788f22a0866",
+  "queryResult": {
+    "queryText": "when is the next train from Stockholm",
+    "action": "get-next-departure",
+    "parameters": {
+      "transportation-method": "train",
+      "location": "Stockholm"
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentMessages": [{
+      "text": {
+        "text": [""]
+      }
+    }],
+    "outputContexts": [{
+      "name": "projects/stockholm-public-transport/agent/sessions/15478189104263347049375/contexts/google_assistant_input_type_voice",
+      "parameters": {
+        "transportation-method": "train",
+        "location.original": "Stockholm",
+        "location": "Stockholm",
+        "transportation-method.original": "train"
+      }
+    }, {
+      "name": "projects/stockholm-public-transport/agent/sessions/15478189104263347049375/contexts/actions_capability_audio_output",
+      "parameters": {
+        "transportation-method": "train",
+        "location.original": "Stockholm",
+        "location": "Stockholm",
+        "transportation-method.original": "train"
+      }
+    }, {
+      "name": "projects/stockholm-public-transport/agent/sessions/15478189104263347049375/contexts/actions_capability_media_response_audio",
+      "parameters": {
+        "transportation-method": "train",
+        "location.original": "Stockholm",
+        "location": "Stockholm",
+        "transportation-method.original": "train"
+      }
+    }],
+    "intent": {
+      "name": "projects/stockholm-public-transport/agent/intents/6c404127-2aef-4b6c-af76-cf93c333642f",
+      "displayName": "next-departure"
+    },
+    "intentDetectionConfidence": 1.0,
+    "languageCode": "en-gb"
+  },
+  "originalDetectIntentRequest": {
+    "source": "google",
+    "version": "2",
+    "payload": {
+      "isInSandbox": true,
+      "surface": {
+        "capabilities": [{
+          "name": "actions.capability.AUDIO_OUTPUT"
+        }, {
+          "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+        }]
+      },
+      "inputs": [{
+        "rawInputs": [{
+          "query": "when is the next train from Stockholm",
+          "inputType": "VOICE"
+        }],
+        "arguments": [{
+          "rawText": "when is the next train from Stockholm",
+          "textValue": "when is the next train from Stockholm",
+          "name": "text"
+        }],
+        "intent": "actions.intent.TEXT"
+      }],
+      "user": {
+        "locale": "en-GB",
+        "userId": "15478189225731780762742"
+      },
+      "conversation": {
+        "conversationId": "15478189104263347049375",
+        "type": "ACTIVE",
+        "conversationToken": "[]"
+      }
+    }
+  },
+  "session": "projects/stockholm-public-transport/agent/sessions/15478189104263347049375"
+}
