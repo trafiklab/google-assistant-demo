@@ -17,3 +17,7 @@ $router->get('/dialogflow/intent/next-departure',
         'as' => 'getNextDeparture',
     ]
 );
+
+$app->get('/', function () {
+    return 'Hello World! ' . env("APP_NAME")  . ' is up and running!';
+});
