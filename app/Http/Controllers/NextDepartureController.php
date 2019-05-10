@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\SlDataRepository;
 use Illuminate\Http\Request;
 use Sl\SlWrapper;
 use Trafiklab\Common\Model\Exceptions\InvalidKeyException;
@@ -12,6 +11,7 @@ use Trafiklab\Common\Model\Exceptions\KeyRequiredException;
 use Trafiklab\Common\Model\Exceptions\QuotaExceededException;
 use Trafiklab\Common\Model\Exceptions\RequestTimedOutException;
 use Trafiklab\Common\Model\Exceptions\ServiceUnavailableException;
+use Trafiklab\Sl\Model\SlStopLocationLookupRequest;
 use Trafiklab\Sl\Model\SlTimeTableRequest;
 
 class NextDepartureController extends GoogleHomeController
@@ -28,18 +28,22 @@ class NextDepartureController extends GoogleHomeController
 
     public function getNextDeparture()
     {
-        $locationName = $this->getDialogFlowPayload()->getParameter('location');
-        $slData = new SlDataRepository();
-        $slData->getStationId($locationName);
-
-        $timeTableRequest = new SlTimeTableRequest();
-
         /**
          * @var $slWrapper SlWrapper
          */
         $slWrapper = app(SlWrapper::class);
+        $locationName = $this->getDialogFlowPayload()->getParameter('location');
+
         try {
+            $locationLookupRequest = new SlStopLocationLookupRequest();
+            $locationLookupRequest->setSearchQuery($locationName);
+            $stopLocationLookupResponse = $slWrapper->lookupStopLocation($locationLookupRequest);
+            $stopLocationId = $stopLocationLookupResponse->getFoundStopLocations()[0]->getId();
+
+            $timeTableRequest = new SlTimeTableRequest();
+            $timeTableRequest->setStopId($stopLocationId);
             $response = $slWrapper->getTimeTable($timeTableRequest);
+
             // Create a response
             $this->respondWithTextToSpeech("The next {$response->getTimetable()[0]->getTransportType()} 
               from {$response->getTimetable()[0]->getStopName()} is

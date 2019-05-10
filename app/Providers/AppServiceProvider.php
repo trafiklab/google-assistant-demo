@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
             $wrapper = new SlWrapper();
             $wrapper->setTimeTablesApiKey(env('SL_TIMETABLE_KEY'));
             $wrapper->setRoutePlanningApiKey(env('SL_ROUTEPLANNING_KEY'));
+            $wrapper->setStopLocationLookupApiKey(env('SL_STATIONLOOKUP_KEY'));
             $wrapper->setUserAgent(env('APP_USER_AGENT'));
             return new $wrapper;
         });
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
             $wrapper = new ResRobotWrapper();
             $wrapper->setTimeTablesApiKey(env('RESROBOT_TIMETABLE_KEY'));
             $wrapper->setRoutePlanningApiKey(env('RESROBOT_ROUTEPLANNING_KEY'));
+            $wrapper->setStopLocationLookupApiKey(env('RESROBOT_ROUTEPLANNING_KEY'));
             $wrapper->setUserAgent(env('APP_USER_AGENT'));
             return new $wrapper;
         });

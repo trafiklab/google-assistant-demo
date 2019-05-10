@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fb978dc17ba12bc5e04cebf06cb16c3",
+    "content-hash": "c84c9a1af3a0d4c3dfe4374e0d820ee8",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -2325,16 +2325,16 @@
         },
         {
             "name": "symfony/contracts",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/contracts.git",
-                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf"
+                "reference": "d3636025e8253c6144358ec0a62773cae588395b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/contracts/zipball/1aa7ab2429c3d594dd70689604b5cf7421254cdf",
-                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf",
+                "url": "https://api.github.com/repos/symfony/contracts/zipball/d3636025e8253c6144358ec0a62773cae588395b",
+                "reference": "d3636025e8253c6144358ec0a62773cae588395b",
                 "shasum": ""
             },
             "require": {
@@ -2342,19 +2342,22 @@
             },
             "require-dev": {
                 "psr/cache": "^1.0",
-                "psr/container": "^1.0"
+                "psr/container": "^1.0",
+                "symfony/polyfill-intl-idn": "^1.10"
             },
             "suggest": {
                 "psr/cache": "When using the Cache contracts",
                 "psr/container": "When using the Service contracts",
                 "symfony/cache-contracts-implementation": "",
+                "symfony/event-dispatcher-implementation": "",
+                "symfony/http-client-contracts-implementation": "",
                 "symfony/service-contracts-implementation": "",
                 "symfony/translation-contracts-implementation": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -2389,7 +2392,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2018-12-05T08:06:11+00:00"
+            "time": "2019-04-27T14:29:50+00:00"
         },
         {
             "name": "symfony/debug",
@@ -3077,16 +3080,16 @@
         },
         {
             "name": "trafiklab/php-sdk-commons",
-            "version": "0.2.0",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/php-sdk-commons.git",
-                "reference": "1a7fd34c72e9050252668b155998557e9516a040"
+                "reference": "8340700f7bb7b671ab1fb7ebd745403ba959696b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/php-sdk-commons/zipball/1a7fd34c72e9050252668b155998557e9516a040",
-                "reference": "1a7fd34c72e9050252668b155998557e9516a040",
+                "url": "https://api.github.com/repos/trafiklab/php-sdk-commons/zipball/8340700f7bb7b671ab1fb7ebd745403ba959696b",
+                "reference": "8340700f7bb7b671ab1fb7ebd745403ba959696b",
                 "shasum": ""
             },
             "require": {
@@ -3125,26 +3128,26 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-07T16:14:56+00:00"
+            "time": "2019-05-09T12:58:00+00:00"
         },
         {
             "name": "trafiklab/resrobot-php-sdk",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/resrobot-php-sdk.git",
-                "reference": "a3a21649216e1d87186b73c60a30335c3f8d4df9"
+                "reference": "297428f55d3c7ce59929d1e8cf0e5769763b9b4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/a3a21649216e1d87186b73c60a30335c3f8d4df9",
-                "reference": "a3a21649216e1d87186b73c60a30335c3f8d4df9",
+                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/297428f55d3c7ce59929d1e8cf0e5769763b9b4a",
+                "reference": "297428f55d3c7ce59929d1e8cf0e5769763b9b4a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=7.1",
-                "trafiklab/php-sdk-commons": "^0.2.0"
+                "trafiklab/php-sdk-commons": "~0.3.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -3168,7 +3171,7 @@
                     "email": "bert.marcelis@samtrafiken.se"
                 }
             ],
-            "description": "Use Swedish public transport data in your project with ResRobot and SL",
+            "description": "Use Swedish public transport data in your project with ResRobot",
             "homepage": "https://trafiklab.se",
             "keywords": [
                 "Public Transport",
@@ -3178,26 +3181,26 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-08T07:09:41+00:00"
+            "time": "2019-05-10T15:32:18+00:00"
         },
         {
             "name": "trafiklab/sl-php-sdk",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/sl-php-sdk.git",
-                "reference": "e7bd57ed6b255d1d28acdd1ddda6aaf0b375004a"
+                "reference": "69458d49aa08cf1a2bfbc3779ac2a4522fe6e2ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/e7bd57ed6b255d1d28acdd1ddda6aaf0b375004a",
-                "reference": "e7bd57ed6b255d1d28acdd1ddda6aaf0b375004a",
+                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/69458d49aa08cf1a2bfbc3779ac2a4522fe6e2ed",
+                "reference": "69458d49aa08cf1a2bfbc3779ac2a4522fe6e2ed",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=7.1",
-                "trafiklab/php-sdk-commons": "^0.2.0"
+                "trafiklab/php-sdk-commons": "~0.3.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -3230,7 +3233,7 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-08T07:11:19+00:00"
+            "time": "2019-05-10T15:22:49+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -4124,16 +4127,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.9",
+            "version": "7.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "134669cf0eeac3f79bc7f0c793efbc158bffc160"
+                "reference": "d7d9cee051d03ed98df6023aad93f7902731a780"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/134669cf0eeac3f79bc7f0c793efbc158bffc160",
-                "reference": "134669cf0eeac3f79bc7f0c793efbc158bffc160",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d7d9cee051d03ed98df6023aad93f7902731a780",
+                "reference": "d7d9cee051d03ed98df6023aad93f7902731a780",
                 "shasum": ""
             },
             "require": {
@@ -4204,7 +4207,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-04-19T15:50:46+00:00"
+            "time": "2019-05-09T05:06:47+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
