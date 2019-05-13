@@ -54,7 +54,7 @@ class NextDepartureController extends GoogleHomeController
                 {
                     return $this->respondWithTextToSpeech("The next " . strtolower($timeTableEntry->getTransportType()) . " "
                         . "from {$timeTableEntry->getStopName()} is "
-                        . strtolower($timeTableEntry->getTransportType()) . " {$timeTableEntry->getLineNumber()}  {$timeTableEntry->getLineName()} "
+                        . strtolower($timeTableEntry->getTransportType()) . " {$timeTableEntry->getLineNumber()}  to {$timeTableEntry->getDirection()} "
                         . "at {$timeTableEntry->getScheduledStopTime()->format("H:i")}");
                 }
             }
