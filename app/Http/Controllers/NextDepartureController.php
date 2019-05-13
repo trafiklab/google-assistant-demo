@@ -52,9 +52,9 @@ class NextDepartureController extends GoogleHomeController
             foreach ($response->getTimetable() as $timeTableEntry) {
                 if ($timeTableEntry->getTransportType() == $transportType) // Create a response
                 {
-                    return $this->respondWithTextToSpeech("The next {$timeTableEntry->getTransportType()} "
+                    return $this->respondWithTextToSpeech("The next " . strtolower($timeTableEntry->getTransportType()) . " "
                         . "from {$timeTableEntry->getStopName()} is "
-                        . "{$timeTableEntry->getLineNumber()}  {$timeTableEntry->getLineName()} "
+                        . strtolower($timeTableEntry->getTransportType()) . " {$timeTableEntry->getLineNumber()}  {$timeTableEntry->getLineName()} "
                         . "at {$timeTableEntry->getScheduledStopTime()->format("H:i")}");
                 }
             }
