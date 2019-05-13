@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Sl\SlWrapper;
 use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
 use Trafiklab\Common\Model\Exceptions\InvalidKeyException;
 use Trafiklab\Common\Model\Exceptions\InvalidRequestException;
@@ -15,6 +14,7 @@ use Trafiklab\Common\Model\Exceptions\RequestTimedOutException;
 use Trafiklab\Common\Model\Exceptions\ServiceUnavailableException;
 use Trafiklab\Sl\Model\SlStopLocationLookupRequest;
 use Trafiklab\Sl\Model\SlTimeTableRequest;
+use Trafiklab\Sl\SlWrapper;
 
 class NextDepartureController extends GoogleHomeController
 {
