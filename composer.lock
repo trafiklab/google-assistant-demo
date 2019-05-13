@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "abf27ffbe491c374f4f44a45aba40c66",
+    "content-hash": "c3755cbe653a05d1e825b75d57f6ef53",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -3185,16 +3185,16 @@
         },
         {
             "name": "trafiklab/sl-php-sdk",
-            "version": "0.3.2",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/sl-php-sdk.git",
-                "reference": "9b35522441f4f9d2cd796679e97cce2d8241373d"
+                "reference": "c231a55f12424b79486c3b1e70663e6bc9ed92db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/9b35522441f4f9d2cd796679e97cce2d8241373d",
-                "reference": "9b35522441f4f9d2cd796679e97cce2d8241373d",
+                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/c231a55f12424b79486c3b1e70663e6bc9ed92db",
+                "reference": "c231a55f12424b79486c3b1e70663e6bc9ed92db",
                 "shasum": ""
             },
             "require": {
@@ -3233,7 +3233,7 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-13T12:41:51+00:00"
+            "time": "2019-05-13T13:09:02+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
