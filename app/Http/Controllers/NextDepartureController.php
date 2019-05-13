@@ -48,25 +48,25 @@ class NextDepartureController extends GoogleHomeController
             $response = $slWrapper->getTimeTable($timeTableRequest);
 
             // Create a response
-            $this->respondWithTextToSpeech("The next {$response->getTimetable()[0]->getTransportType()} 
+            return $this->respondWithTextToSpeech("The next {$response->getTimetable()[0]->getTransportType()} 
               from {$response->getTimetable()[0]->getStopName()} is
               {$response->getTimetable()[0]->getLineNumber()}  {$response->getTimetable()[0]->getLineName()} 
               at {$response->getTimetable()[0]->getScheduledStopTime()->format("H:i")}"
             );
         } catch (InvalidKeyException $e) {
-            $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
+            return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
         } catch (InvalidStoplocationException $e) {
-            $this->respondWithTextToSpeech("I would like to answer you, but don't know that station");
+            return $this->respondWithTextToSpeech("I would like to answer you, but don't know that station");
         } catch (KeyRequiredException $e) {
-            $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
+            return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
         } catch (InvalidRequestException $e) {
-            $this->respondWithTextToSpeech("I would like to answer you, but I didn't get all  the details");
+            return $this->respondWithTextToSpeech("I would like to answer you, but I didn't get all  the details");
         } catch (QuotaExceededException $e) {
-            $this->respondWithTextToSpeech("I would like to answer you, but I already talked too much");
+            return $this->respondWithTextToSpeech("I would like to answer you, but I already talked too much");
         } catch (RequestTimedOutException $e) {
-            $this->respondWithTextToSpeech("I could not obtain this data, it took too long");
+            return $this->respondWithTextToSpeech("I could not obtain this data, it took too long");
         } catch (ServiceUnavailableException $e) {
-            $this->respondWithTextToSpeech("I could not obtain this data, the service is not available");
+            return $this->respondWithTextToSpeech("I could not obtain this data, the service is not available");
         }
     }
 

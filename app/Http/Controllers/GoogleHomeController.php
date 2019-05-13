@@ -22,7 +22,7 @@ class GoogleHomeController extends BaseController
      */
     public function respondWithTextToSpeech(string $responseText)
     {
-        response()->json($this->buildGoogleAssistantResponse($responseText));
+       return response()->json($this->buildGoogleAssistantResponse($responseText));
     }
 
     /**
