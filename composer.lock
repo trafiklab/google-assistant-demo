@@ -3080,16 +3080,16 @@
         },
         {
             "name": "trafiklab/php-sdk-commons",
-            "version": "0.3.3",
+            "version": "0.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/php-sdk-commons.git",
-                "reference": "8340700f7bb7b671ab1fb7ebd745403ba959696b"
+                "reference": "200c6312a4a2ab7eadade1cd53a5645518254ddb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/php-sdk-commons/zipball/8340700f7bb7b671ab1fb7ebd745403ba959696b",
-                "reference": "8340700f7bb7b671ab1fb7ebd745403ba959696b",
+                "url": "https://api.github.com/repos/trafiklab/php-sdk-commons/zipball/200c6312a4a2ab7eadade1cd53a5645518254ddb",
+                "reference": "200c6312a4a2ab7eadade1cd53a5645518254ddb",
                 "shasum": ""
             },
             "require": {
@@ -3128,26 +3128,26 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-09T12:58:00+00:00"
+            "time": "2019-05-13T17:11:46+00:00"
         },
         {
             "name": "trafiklab/resrobot-php-sdk",
-            "version": "0.3.1",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/resrobot-php-sdk.git",
-                "reference": "98b01356f20ad80538965f420c6a15ffb693b05a"
+                "reference": "6fc8eebc29951c68fabab641354e2514fe66a66e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/98b01356f20ad80538965f420c6a15ffb693b05a",
-                "reference": "98b01356f20ad80538965f420c6a15ffb693b05a",
+                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/6fc8eebc29951c68fabab641354e2514fe66a66e",
+                "reference": "6fc8eebc29951c68fabab641354e2514fe66a66e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=7.1",
-                "trafiklab/php-sdk-commons": "~0.3.3"
+                "trafiklab/php-sdk-commons": "~0.3.4"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -3181,26 +3181,26 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-13T12:23:07+00:00"
+            "time": "2019-05-13T17:27:41+00:00"
         },
         {
             "name": "trafiklab/sl-php-sdk",
-            "version": "0.3.3",
+            "version": "0.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/sl-php-sdk.git",
-                "reference": "c231a55f12424b79486c3b1e70663e6bc9ed92db"
+                "reference": "80b1e2e7be57996b78187c06971869eb3b71d696"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/c231a55f12424b79486c3b1e70663e6bc9ed92db",
-                "reference": "c231a55f12424b79486c3b1e70663e6bc9ed92db",
+                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/80b1e2e7be57996b78187c06971869eb3b71d696",
+                "reference": "80b1e2e7be57996b78187c06971869eb3b71d696",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=7.1",
-                "trafiklab/php-sdk-commons": "~0.3.3"
+                "trafiklab/php-sdk-commons": "~0.3.4"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -3233,7 +3233,7 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-13T13:09:02+00:00"
+            "time": "2019-05-13T17:16:11+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
