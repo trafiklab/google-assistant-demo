@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c84c9a1af3a0d4c3dfe4374e0d820ee8",
+    "content-hash": "b16799f6231bd1a34d7126d295355434",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -3132,16 +3132,16 @@
         },
         {
             "name": "trafiklab/resrobot-php-sdk",
-            "version": "0.3.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/resrobot-php-sdk.git",
-                "reference": "297428f55d3c7ce59929d1e8cf0e5769763b9b4a"
+                "reference": "98b01356f20ad80538965f420c6a15ffb693b05a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/297428f55d3c7ce59929d1e8cf0e5769763b9b4a",
-                "reference": "297428f55d3c7ce59929d1e8cf0e5769763b9b4a",
+                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/98b01356f20ad80538965f420c6a15ffb693b05a",
+                "reference": "98b01356f20ad80538965f420c6a15ffb693b05a",
                 "shasum": ""
             },
             "require": {
@@ -3181,20 +3181,20 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-10T15:32:18+00:00"
+            "time": "2019-05-13T12:23:07+00:00"
         },
         {
             "name": "trafiklab/sl-php-sdk",
-            "version": "0.3.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/sl-php-sdk.git",
-                "reference": "69458d49aa08cf1a2bfbc3779ac2a4522fe6e2ed"
+                "reference": "4331d1eb54e3152e9771b6fd0a3c6ecb9bbad7b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/69458d49aa08cf1a2bfbc3779ac2a4522fe6e2ed",
-                "reference": "69458d49aa08cf1a2bfbc3779ac2a4522fe6e2ed",
+                "url": "https://api.github.com/repos/trafiklab/sl-php-sdk/zipball/4331d1eb54e3152e9771b6fd0a3c6ecb9bbad7b2",
+                "reference": "4331d1eb54e3152e9771b6fd0a3c6ecb9bbad7b2",
                 "shasum": ""
             },
             "require": {
@@ -3233,7 +3233,7 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-10T15:22:49+00:00"
+            "time": "2019-05-13T12:23:26+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

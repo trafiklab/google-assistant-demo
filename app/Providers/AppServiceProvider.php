@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use ResRobotWrapper;
-use Sl\SlWrapper;
+use Trafiklab\ResRobot\ResRobotWrapper;
+use Trafiklab\Sl\SlWrapper;
 
 class AppServiceProvider extends ServiceProvider
 {
