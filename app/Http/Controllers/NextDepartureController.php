@@ -47,12 +47,18 @@ class NextDepartureController extends GoogleHomeController
             $timeTableRequest->setStopId($stopLocationId);
             $response = $slWrapper->getTimeTable($timeTableRequest);
 
-            // Create a response
-            return $this->respondWithTextToSpeech("The next {$response->getTimetable()[0]->getTransportType()} 
-              from {$response->getTimetable()[0]->getStopName()} is
-              {$response->getTimetable()[0]->getLineNumber()}  {$response->getTimetable()[0]->getLineName()} 
-              at {$response->getTimetable()[0]->getScheduledStopTime()->format("H:i")}"
-            );
+            foreach ($response->getTimetable() as $timeTableEntry) {
+                if ($timeTableEntry->getTransportType() == $this->getDialogFlowPayload()->getParameter("transportation-method")) // Create a response
+                {
+                    return $this->respondWithTextToSpeech("The next {$timeTableEntry->getTransportType()} 
+              from {$timeTableEntry->getStopName()} is
+              {$timeTableEntry->getLineNumber()}  {$timeTableEntry->getLineName()} 
+              at {$timeTableEntry->getScheduledStopTime()->format("H:i")}"
+                    );
+                }
+            }
+            return $this->respondWithTextToSpeech("I could not find any " . $this->getDialogFlowPayload()->getParameter("transportation-method") .
+                " departing from " . $stopLocationLookupResponse->getFoundStopLocations()[0]->getName());
         } catch (InvalidKeyException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
