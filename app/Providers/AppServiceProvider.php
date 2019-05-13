@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
             $wrapper->setRoutePlanningApiKey(env('SL_ROUTEPLANNING_KEY'));
             $wrapper->setStopLocationLookupApiKey(env('SL_STATIONLOOKUP_KEY'));
             $wrapper->setUserAgent(env('APP_USER_AGENT'));
-            return new $wrapper;
+            return $wrapper;
         });
 
         $this->app->singleton(ResRobotWrapper::class, function ($app) {
@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             $wrapper->setRoutePlanningApiKey(env('RESROBOT_ROUTEPLANNING_KEY'));
             $wrapper->setStopLocationLookupApiKey(env('RESROBOT_ROUTEPLANNING_KEY'));
             $wrapper->setUserAgent(env('APP_USER_AGENT'));
-            return new $wrapper;
+            return $wrapper;
         });
     }
 }
