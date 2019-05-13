@@ -54,18 +54,25 @@ class NextDepartureController extends GoogleHomeController
               at {$response->getTimetable()[0]->getScheduledStopTime()->format("H:i")}"
             );
         } catch (InvalidKeyException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
         } catch (InvalidStoplocationException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I would like to answer you, but don't know that station");
         } catch (KeyRequiredException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
         } catch (InvalidRequestException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I would like to answer you, but I didn't get all  the details");
         } catch (QuotaExceededException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I would like to answer you, but I already talked too much");
         } catch (RequestTimedOutException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I could not obtain this data, it took too long");
         } catch (ServiceUnavailableException $e) {
+            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->respondWithTextToSpeech("I could not obtain this data, the service is not available");
         }
     }
