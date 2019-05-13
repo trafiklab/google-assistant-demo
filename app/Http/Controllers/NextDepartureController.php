@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Sl\SlWrapper;
+use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
 use Trafiklab\Common\Model\Exceptions\InvalidKeyException;
 use Trafiklab\Common\Model\Exceptions\InvalidRequestException;
 use Trafiklab\Common\Model\Exceptions\InvalidStoplocationException;
@@ -31,7 +32,7 @@ class NextDepartureController extends GoogleHomeController
     public function getNextDeparture()
     {
         /**
-         * @var $slWrapper SlWrapper
+         * @var $slWrapper PublicTransportApiWrapper A wrapper for SL, ResRobot, ...
          */
         $slWrapper = app(SlWrapper::class);
         $locationName = $this->getDialogFlowPayload()->getParameter('location');
