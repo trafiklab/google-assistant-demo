@@ -32,7 +32,7 @@ class DialogFlowPayload
         $this->_containsAllRequiredParameters = $payload['queryResult']['allRequiredParamsPresent'];
         $this->_intentName = $payload['queryResult']['intent']['name'];
         $this->_intentDisplayName = $payload['queryResult']['intent']['displayName'];
-        $this->_conversationId = $payload['originalDetectIntentRequest']['conversation']['conversationId'];
+        //$this->_conversationId = $payload['originalDetectIntentRequest']['conversation']['conversationId'];
     }
 
     /**
