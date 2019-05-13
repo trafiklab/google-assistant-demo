@@ -24,7 +24,7 @@ class NextDepartureController extends GoogleHomeController
      */
     public function __construct(Request $request)
     {
-        Log::info("NextDeparture intent called. POST Payload: " + $request->getContent());
+        Log::info("NextDeparture intent called. POST Payload: " . $request->getContent());
         parent::__construct(json_decode($request->getContent(), true));
     }
 
