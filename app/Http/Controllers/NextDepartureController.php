@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Sl\SlWrapper;
 use Trafiklab\Common\Model\Exceptions\InvalidKeyException;
 use Trafiklab\Common\Model\Exceptions\InvalidRequestException;
@@ -19,10 +20,11 @@ class NextDepartureController extends GoogleHomeController
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param Request $request
      */
     public function __construct(Request $request)
     {
+        Log::info("NextDeparture intent called. POST Payload: " + $request->getContent());
         parent::__construct(json_decode($request->getContent(), true));
     }
 
