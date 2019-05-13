@@ -11,7 +11,7 @@
 |
 */
 
-$router->get('/dialogflow/intent/next-departure',
+$router->post('/dialogflow/intent/next-departure',
     [
         'uses' => 'NextDepartureController@getNextDeparture',
         'as' => 'getNextDeparture',
