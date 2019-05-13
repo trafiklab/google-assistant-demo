@@ -47,17 +47,18 @@ class NextDepartureController extends GoogleHomeController
             $timeTableRequest->setStopId($stopLocationId);
             $response = $slWrapper->getTimeTable($timeTableRequest);
 
+            $transportType = strToUpper($this->getDialogFlowPayload()->getParameter("transportation-method"));
+
             foreach ($response->getTimetable() as $timeTableEntry) {
-                if ($timeTableEntry->getTransportType() == $this->getDialogFlowPayload()->getParameter("transportation-method")) // Create a response
+                if ($timeTableEntry->getTransportType() == $transportType) // Create a response
                 {
-                    return $this->respondWithTextToSpeech("The next {$timeTableEntry->getTransportType()} 
-              from {$timeTableEntry->getStopName()} is
-              {$timeTableEntry->getLineNumber()}  {$timeTableEntry->getLineName()} 
-              at {$timeTableEntry->getScheduledStopTime()->format("H:i")}"
-                    );
+                    return $this->respondWithTextToSpeech("The next {$timeTableEntry->getTransportType()} "
+                        . "from {$timeTableEntry->getStopName()} is "
+                        . "{$timeTableEntry->getLineNumber()}  {$timeTableEntry->getLineName()} "
+                        . "at {$timeTableEntry->getScheduledStopTime()->format("H:i")}");
                 }
             }
-            return $this->respondWithTextToSpeech("I could not find any " . $this->getDialogFlowPayload()->getParameter("transportation-method") .
+            return $this->respondWithTextToSpeech("I could not find any " . strtolower($this->getDialogFlowPayload()->getParameter("transportation-method")) .
                 " departing from " . $stopLocationLookupResponse->getFoundStopLocations()[0]->getName());
         } catch (InvalidKeyException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
