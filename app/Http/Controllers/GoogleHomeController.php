@@ -20,7 +20,7 @@ class GoogleHomeController extends BaseController
      *
      * @param string $responseText
      */
-    public function respondWithTextToSpeech(string $responseText)
+    public function createTextToSpeechResponse(string $responseText)
     {
        return response()->json($this->buildGoogleAssistantResponse($responseText));
     }

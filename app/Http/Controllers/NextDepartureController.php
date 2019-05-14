@@ -52,35 +52,35 @@ class NextDepartureController extends GoogleHomeController
             foreach ($response->getTimetable() as $timeTableEntry) {
                 if ($timeTableEntry->getTransportType() == $transportType) // Create a response
                 {
-                    return $this->respondWithTextToSpeech("The next " . strtolower($timeTableEntry->getTransportType()) . " "
+                    return $this->createTextToSpeechResponse("The next " . strtolower($timeTableEntry->getTransportType()) . " "
                         . "from {$timeTableEntry->getStopName()} is "
                         . strtolower($timeTableEntry->getTransportType()) . " {$timeTableEntry->getLineNumber()}  to {$timeTableEntry->getDirection()} "
                         . "at {$timeTableEntry->getScheduledStopTime()->format("H:i")}");
                 }
             }
-            return $this->respondWithTextToSpeech("I could not find any " . strtolower($this->getDialogFlowPayload()->getParameter("transportation-method")) .
+            return $this->createTextToSpeechResponse("I could not find any " . strtolower($this->getDialogFlowPayload()->getParameter("transportation-method")) .
                 " departing from " . $stopLocationLookupResponse->getFoundStopLocations()[0]->getName());
         } catch (InvalidKeyException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
+            return $this->createTextToSpeechResponse("I would like to answer you, but I don't have the right keys");
         } catch (InvalidStoplocationException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I would like to answer you, but don't know that station");
+            return $this->createTextToSpeechResponse("I would like to answer you, but don't know that station");
         } catch (KeyRequiredException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I would like to answer you, but I don't have the right keys");
+            return $this->createTextToSpeechResponse("I would like to answer you, but I don't have the right keys");
         } catch (InvalidRequestException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I would like to answer you, but I didn't get all  the details");
+            return $this->createTextToSpeechResponse("I would like to answer you, but I didn't get all  the details");
         } catch (QuotaExceededException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I would like to answer you, but I already talked too much");
+            return $this->createTextToSpeechResponse("I would like to answer you, but I already talked too much");
         } catch (RequestTimedOutException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I could not obtain this data, it took too long");
+            return $this->createTextToSpeechResponse("I could not obtain this data, it took too long");
         } catch (ServiceUnavailableException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->respondWithTextToSpeech("I could not obtain this data, the service is not available");
+            return $this->createTextToSpeechResponse("I could not obtain this data, the service is not available");
         }
     }
 
