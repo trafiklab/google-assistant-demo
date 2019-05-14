@@ -25,6 +25,11 @@ $router->post('/dialogflow/intent/plan-route',
     ]
 );
 
+$router->post('/dialogflow/intent/handle', [
+        'uses' => 'DialogFlowController@redirectIntentToController',
+        'as' => 'redirectIntent',
+    ]
+);
 
 $router->get('/', function () {
     return 'Hello World! ' . env("APP_NAME")  . ' is up and running!';

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\DialogFlowPayload;
+use Illuminate\Http\JsonResponse;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
-class GoogleHomeController extends BaseController
+class DialogFlowController extends BaseController
 {
 
     private $_dialogFlowPayload;
@@ -16,13 +17,15 @@ class GoogleHomeController extends BaseController
     }
 
     /**
-     * Send a JSON response to Google Dialogflow in order to make google assistant answer the question.
+     * Send a JSON response to Dialogflow in order to make google assistant answer the question.
      *
      * @param string $responseText
+     *
+     * @return JsonResponse Json reply for dialogflow.
      */
     public function createTextToSpeechResponse(string $responseText)
     {
-       return response()->json($this->buildGoogleAssistantResponse($responseText));
+        return response()->json($this->buildDialogFlowResponse($responseText));
     }
 
     /**
@@ -30,7 +33,7 @@ class GoogleHomeController extends BaseController
      *
      * @return array
      */
-    public function buildGoogleAssistantResponse(string $responseText): array
+    public function buildDialogFlowResponse(string $responseText): array
     {
         return [
             'payload' => [
@@ -48,6 +51,18 @@ class GoogleHomeController extends BaseController
                 ],
             ],
         ];
+    }
+
+    public function redirectIntentToController()
+    {
+        switch ($this->_dialogFlowPayload->getIntentDisplayName()) {
+            case 'next-departure':
+                return redirect('getNextDeparture');
+            case 'plan-route':
+                return redirect('getRoutePlanning');
+            default:
+                return $this->buildDialogFlowResponse("I can only tell you about the next departures or plan routes for you");
+        }
     }
 
     /**

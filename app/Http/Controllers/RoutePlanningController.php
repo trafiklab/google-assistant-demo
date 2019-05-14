@@ -17,7 +17,7 @@ use Trafiklab\Sl\Model\SlRoutePlanningRequest;
 use Trafiklab\Sl\Model\SlStopLocationLookupRequest;
 use Trafiklab\Sl\SlWrapper;
 
-class RoutePlanningController extends GoogleHomeController
+class RoutePlanningController extends DialogFlowController
 {
     /**
      * Create a new controller instance.

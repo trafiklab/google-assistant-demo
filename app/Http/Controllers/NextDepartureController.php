@@ -16,7 +16,7 @@ use Trafiklab\Sl\Model\SlStopLocationLookupRequest;
 use Trafiklab\Sl\Model\SlTimeTableRequest;
 use Trafiklab\Sl\SlWrapper;
 
-class NextDepartureController extends GoogleHomeController
+class NextDepartureController extends DialogFlowController
 {
     /**
      * Create a new controller instance.
