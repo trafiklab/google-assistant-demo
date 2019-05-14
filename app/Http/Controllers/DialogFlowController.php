@@ -61,10 +61,10 @@ class DialogFlowController extends BaseController
         switch ($this->_dialogFlowPayload->getIntentDisplayName()) {
             case 'next-departure':
                 Log::info("DialogFlowController redirecting to NextDeparture intent endpoint");
-                return redirect('getNextDeparture');
+                return redirect()->route('getNextDeparture');
             case 'plan-route':
                 Log::info("DialogFlowController redirecting to PlanRoute intent endpoint");
-                return redirect('getRoutePlanning');
+                return redirect()->route('getRoutePlanning');
             default:
                 return $this->buildDialogFlowResponse("I can only tell you about the next departures or plan routes for you");
         }
