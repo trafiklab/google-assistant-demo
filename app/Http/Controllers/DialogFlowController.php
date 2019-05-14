@@ -12,10 +12,12 @@ class DialogFlowController extends BaseController
 {
 
     private $_dialogFlowPayload;
+    private $_request;
 
     public function __construct(Request $request)
     {
         Log::info("DialogFlowController constructing. POST Payload: " . $request->getContent());
+        $this->_request = $request;
         $this->_dialogFlowPayload = new DialogFlowPayload(json_decode($request->getContent(), true));
     }
 
@@ -26,9 +28,9 @@ class DialogFlowController extends BaseController
      *
      * @return JsonResponse Json reply for dialogflow.
      */
-    public function createTextToSpeechResponse(string $responseText)
+    public static function createTextToSpeechResponse(string $responseText)
     {
-        return response()->json($this->buildDialogFlowResponse($responseText));
+        return response()->json(self::buildDialogFlowResponse($responseText));
     }
 
     /**
@@ -36,7 +38,7 @@ class DialogFlowController extends BaseController
      *
      * @return array
      */
-    public function buildDialogFlowResponse(string $responseText): array
+    public static function buildDialogFlowResponse(string $responseText): array
     {
         return [
             'payload' => [
@@ -60,11 +62,13 @@ class DialogFlowController extends BaseController
     {
         switch ($this->_dialogFlowPayload->getIntentDisplayName()) {
             case 'next-departure':
-                Log::info("DialogFlowController redirecting to NextDeparture intent endpoint");
-                return redirect()->route('getNextDeparture');
+                // There are likely nicer options to do this, and definitely a more efficient one, but it ain't stupid if it works
+                $controller = new NextDepartureController($this->_request);
+                return $controller->getNextDeparture();
             case 'plan-route':
-                Log::info("DialogFlowController redirecting to PlanRoute intent endpoint");
-                return redirect()->route('getRoutePlanning');
+                // There are likely nicer options to do this, and definitely a more efficient one, but it ain't stupid if it works
+                $controller = new RoutePlanningController($this->_request);
+                return $controller->getRoutePlanning();
             default:
                 return $this->buildDialogFlowResponse("I can only tell you about the next departures or plan routes for you");
         }
