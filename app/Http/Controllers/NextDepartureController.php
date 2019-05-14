@@ -25,8 +25,8 @@ class NextDepartureController extends DialogFlowController
      */
     public function __construct(Request $request)
     {
-        Log::info("NextDeparture intent called. POST Payload: " . $request->getContent());
-        parent::__construct(json_decode($request->getContent(), true));
+        Log::info("NextDeparture controller constructed.");
+        parent::__construct($request);
     }
 
     public function getNextDeparture()

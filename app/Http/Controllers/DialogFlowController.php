@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\DialogFlowPayload;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class DialogFlowController extends BaseController
@@ -11,9 +13,10 @@ class DialogFlowController extends BaseController
 
     private $_dialogFlowPayload;
 
-    public function __construct(array $jsonPayload)
+    public function __construct(Request $request)
     {
-        $this->_dialogFlowPayload = new DialogFlowPayload($jsonPayload);
+        Log::info("DialogFlowController constructing. POST Payload: " . $request->getContent());
+        $this->_dialogFlowPayload = new DialogFlowPayload(json_decode($request->getContent(), true));
     }
 
     /**
@@ -57,8 +60,10 @@ class DialogFlowController extends BaseController
     {
         switch ($this->_dialogFlowPayload->getIntentDisplayName()) {
             case 'next-departure':
+                Log::info("DialogFlowController redirecting to NextDeparture intent endpoint");
                 return redirect('getNextDeparture');
             case 'plan-route':
+                Log::info("DialogFlowController redirecting to PlanRoute intent endpoint");
                 return redirect('getRoutePlanning');
             default:
                 return $this->buildDialogFlowResponse("I can only tell you about the next departures or plan routes for you");
