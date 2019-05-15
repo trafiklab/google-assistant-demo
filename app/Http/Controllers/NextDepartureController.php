@@ -25,7 +25,7 @@ class NextDepartureController extends DialogFlowController
      */
     public function __construct(Request $request)
     {
-        Log::info("NextDeparture controller constructed.");
+        Log::info("NextDeparture controller constructing.");
         parent::__construct($request);
     }
 

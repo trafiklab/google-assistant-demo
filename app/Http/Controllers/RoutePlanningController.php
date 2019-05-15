@@ -26,8 +26,8 @@ class RoutePlanningController extends DialogFlowController
      */
     public function __construct(Request $request)
     {
-        Log::info("PlanRoute intent called. POST Payload: " . $request->getContent());
-        parent::__construct(json_decode($request->getContent(), true));
+        Log::info("RoutePlanning controller constructing.");
+        parent::__construct($request);
     }
 
     /**
