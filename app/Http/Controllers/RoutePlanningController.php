@@ -59,7 +59,7 @@ class RoutePlanningController extends DialogFlowController
                     } else {
                         $responseText .= "Then take ";
                     }
-                    $responseText .= strtolower($leg->getVehicle()->getType()) . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} from {$leg->getOrigin()->getStopName()} at {$leg->getOrigin()->getScheduledDepartureTime()}.";
+                    $responseText .= strtolower($leg->getVehicle()->getType()) . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} from {$leg->getOrigin()->getStopName()} at {$leg->getOrigin()->getScheduledDepartureTime()->format("H:i")}.";
                     $responseText .= "Ride along for " . ($leg->getDestination()->getScheduledArrivalTime()->getTimestamp() - $leg->getOrigin()->getScheduledDepartureTime()->getTimestamp()) / 60 . " minutes.";
                     $responseText .= "Exit the vehicle in " . $leg->getDestination()->getStopName();
                 }
