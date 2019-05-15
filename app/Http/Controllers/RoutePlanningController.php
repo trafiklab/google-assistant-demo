@@ -48,7 +48,7 @@ class RoutePlanningController extends DialogFlowController
             $response = $slWrapper->getRoutePlanning($routePlanningRequest);
             if (count($response->getTrips()) > 0) {
                 $routePlan = $response->getTrips()[0];
-                $responseText = "I found you the following route from {$origin->getName()} to {$origin->getName()}. " . PHP_EOL;
+                $responseText = "I found you the following route from {$origin->getName()} to {$destination->getName()}. " . PHP_EOL;
                 foreach ($routePlan->getLegs() as $i => $leg) {
                     if ($i == 0) {
                         if (count($routePlan->getLegs()) == 1) {
