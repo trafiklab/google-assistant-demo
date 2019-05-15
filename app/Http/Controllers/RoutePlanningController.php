@@ -48,7 +48,7 @@ class RoutePlanningController extends DialogFlowController
             $response = $slWrapper->getRoutePlanning($routePlanningRequest);
             if (count($response->getTrips()) > 0) {
                 $routePlan = $response->getTrips()[0];
-                $responseText = "I found you the following route from {$origin->getName()} to {$origin->getName()}.\n";
+                $responseText = "I found you the following route from {$origin->getName()} to {$origin->getName()}. " . PHP_EOL;
                 foreach ($routePlan->getLegs() as $i => $leg) {
                     if ($i == 0) {
                         if (count($routePlan->getLegs()) == 1) {
@@ -59,9 +59,9 @@ class RoutePlanningController extends DialogFlowController
                     } else {
                         $responseText .= "Then take ";
                     }
-                    $responseText .= strtolower($leg->getVehicle()->getType()) . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} from {$leg->getOrigin()->getStopName()} at {$leg->getOrigin()->getScheduledDepartureTime()->format("H:i")}.";
-                    $responseText .= "Ride along for " . ($leg->getDestination()->getScheduledArrivalTime()->getTimestamp() - $leg->getOrigin()->getScheduledDepartureTime()->getTimestamp()) / 60 . " minutes.";
-                    $responseText .= "Exit the vehicle in " . $leg->getDestination()->getStopName();
+                    $responseText .= strtolower($leg->getVehicle()->getType()) . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} from {$leg->getOrigin()->getStopName()} at {$leg->getOrigin()->getScheduledDepartureTime()->format("H:i")}. " . PHP_EOL;
+                    $responseText .= "Ride along for " . ($leg->getDestination()->getScheduledArrivalTime()->getTimestamp() - $leg->getOrigin()->getScheduledDepartureTime()->getTimestamp()) / 60 . " minutes, then ";
+                    $responseText .= "exit the vehicle in " . $leg->getDestination()->getStopName() . ". " . PHP_EOL;
                 }
                 $responseText .= "You have then arrived at your destination.";
                 return $this->createTextToSpeechResponse($responseText);
