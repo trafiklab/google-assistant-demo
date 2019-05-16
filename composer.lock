@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "41521113d655709968cc4ccf7bf05e6a",
+    "content-hash": "2f5809ebe2bae7da9b5d1af47f6a83d1",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -3132,22 +3132,22 @@
         },
         {
             "name": "trafiklab/resrobot-php-sdk",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trafiklab/resrobot-php-sdk.git",
-                "reference": "0307d5102c271e668f3208a7b58bc456eaa658b9"
+                "reference": "f3a7f31bfe97b346fff3590fb7e176d859e7fccc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/0307d5102c271e668f3208a7b58bc456eaa658b9",
-                "reference": "0307d5102c271e668f3208a7b58bc456eaa658b9",
+                "url": "https://api.github.com/repos/trafiklab/resrobot-php-sdk/zipball/f3a7f31bfe97b346fff3590fb7e176d859e7fccc",
+                "reference": "f3a7f31bfe97b346fff3590fb7e176d859e7fccc",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": ">=7.1",
-                "trafiklab/php-sdk-commons": "~0.4.0"
+                "trafiklab/php-sdk-commons": "0.4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -3158,7 +3158,7 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "Trafiklab\\Resrobot": "src/"
+                    "Trafiklab\\ResRobot": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3181,7 +3181,7 @@
                 "sdk",
                 "trafiklab"
             ],
-            "time": "2019-05-15T10:52:01+00:00"
+            "time": "2019-05-16T14:51:50+00:00"
         },
         {
             "name": "trafiklab/sl-php-sdk",
