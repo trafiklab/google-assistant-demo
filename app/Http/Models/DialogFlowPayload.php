@@ -3,9 +3,9 @@
 namespace App\Http\Models;
 
 /**
- * When Google dialogflow makes a request to a webservice, it sends a payload in a POST request.
+ * When Google DialogFlow makes a request to a webservice, it sends a payload in a POST request.
  * This payload contains information about the question asked to Google Assistant, so the server can answer
- * appropriately.
+ * appropriately. Read more at https://dialogflow.com/docs/fulfillment/how-it-works .
  *
  * @package App\Http\Models
  */
@@ -20,7 +20,7 @@ class DialogFlowPayload
     private $_queryText;
 
     /**
-     * Create an instance of DialogflowPayload from POST data received from Google Dialogflow.
+     * Create an instance of DialogFlowPayload from POST data received from Google DialogFlow.
      *
      * @param array $payload
      */
@@ -46,7 +46,7 @@ class DialogFlowPayload
     }
 
     /**
-     * This name shows the human readable name of the Dialogflow intent that made the request to the server.
+     * This name shows the human readable name of the DialogFlow intent that made the request to the server.
      *
      * @return string
      */
@@ -56,7 +56,7 @@ class DialogFlowPayload
     }
 
     /**
-     * This string uniquely identifies the Dialogflow intent that made the request to the server.
+     * This string uniquely identifies the DialogFlow intent that made the request to the server.
      *
      * @return string
      */
@@ -98,7 +98,7 @@ class DialogFlowPayload
     }
 
     /**
-     * Get the name of the action which was executed on Dialogflow.
+     * Get the name of the action which was executed on DialogFlow.
      *
      * @return string
      */

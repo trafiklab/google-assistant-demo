@@ -2,10 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\DialogFlowController;
 use Exception;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -28,7 +29,8 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
+     *
      * @return void
      */
     public function report(Exception $exception)
@@ -39,12 +41,13 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception               $exception
+     *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        return DialogFlowController::createTextToSpeechResponse("I could not fulfill your request. Someone maybe forgot a comma somewhere. The exact problem lies in " . $exception->getFile() . ": " . $exception->getMessage() . ".");
     }
 }
