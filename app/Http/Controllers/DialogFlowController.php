@@ -37,7 +37,7 @@ class DialogFlowController extends BaseController
      *
      * @return JsonResponse Json reply for DialogFlow.
      */
-    public static function createTextToSpeechResponse(string $responseText)
+    public static function createTextToSpeechResponse(string $responseText, bool $isEndOfConversation = true)
     {
         return response()->json(self::buildDialogFlowResponse($responseText));
     }
@@ -52,7 +52,7 @@ class DialogFlowController extends BaseController
      *
      * @return array An array which can be serialized later on.
      */
-    public static function buildDialogFlowResponse(string $responseText, bool $isEndOfConversation): array
+    public static function buildDialogFlowResponse(string $responseText, bool $isEndOfConversation = true): array
     {
         return [
             'payload' => [
