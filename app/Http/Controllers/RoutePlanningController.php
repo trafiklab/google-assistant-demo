@@ -80,15 +80,15 @@ class RoutePlanningController extends DialogFlowController
                     // Explain when, from where, to where.
                     $responseText .= strtolower($leg->getVehicle()->getType())
                         . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} "
-                        . "from {$leg->getOrigin()->getStopName()} "
-                        . "at {$leg->getOrigin()->getScheduledDepartureTime()->format("H:i")}. " . PHP_EOL;
-                    $responseText .= "Ride along for " . ($leg->getDestination()->getScheduledArrivalTime()->getTimestamp() - $leg->getOrigin()->getScheduledDepartureTime()->getTimestamp()) / 60 . " minutes, then ";
-                    $responseText .= "exit the vehicle in " . $leg->getDestination()->getStopName() . ". " . PHP_EOL;
+                        . "from {$leg->getDeparture()->getStopName()} "
+                        . "at {$leg->getDeparture()->getScheduledDepartureTime()->format("H:i")}. " . PHP_EOL;
+                    $responseText .= "Ride along for " . ($leg->getDuration()) / 60 . " minutes, then ";
+                    $responseText .= "exit the vehicle in " . $leg->getArrival()->getStopName() . ". " . PHP_EOL;
 
                 } else if ($leg->getType() == RoutePlanningLegType::WALKING) {
                     // The user needs to walk. We will simply say from where, to where.
                     $responseText .= $this->getStartOfSentence($i, $routePlan, "walk");
-                    $responseText .= "from {$leg->getOrigin()->getStopName()} to {$leg->getDestination()->getStopName()}" . PHP_EOL;
+                    $responseText .= "from {$leg->getDeparture()->getStopName()} to {$leg->getArrival()->getStopName()}" . PHP_EOL;
                 }
             }
             $responseText .= "You have then arrived at your destination.";

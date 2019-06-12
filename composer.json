@@ -7,8 +7,8 @@
     "require": {
         "php": ">=7.1.3",
         "laravel/lumen-framework": "5.8.*",
-        "trafiklab/resrobot-php-sdk": "~0.4.2",
-        "trafiklab/sl-php-sdk": "~0.4.1",
+        "trafiklab/resrobot-php-sdk": "~1.0.0",
+        "trafiklab/sl-php-sdk": "~1.0.0",
         "vlucas/phpdotenv": "^3.3",
       "ext-json": "*"
     },

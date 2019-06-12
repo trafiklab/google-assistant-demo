@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
 use Trafiklab\Common\Model\Contract\TimeTableEntry;
 use Trafiklab\Common\Model\Enum\TimeTableType;
+use Trafiklab\Common\Model\Enum\TransportType;
 use Trafiklab\Common\Model\Exceptions\InvalidKeyException;
 use Trafiklab\Common\Model\Exceptions\InvalidRequestException;
 use Trafiklab\Common\Model\Exceptions\InvalidStoplocationException;
@@ -82,7 +83,6 @@ class NextDepartureController extends DialogFlowController
              * At this point, we have all departures from the stop which was specified.
              * Now we have to find the first stop with the specified means of transport, and create a response.
              */
-
             // Get the transportation method from DialogFlow, and convert it to uppercase. By converting to uppercase,
             // we can compare it to the transportType field in every timeTableEntry object.
             $transportType = strToUpper($this->getDialogFlowPayload()->getParameter("transportation-method"));
