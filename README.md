@@ -1,6 +1,8 @@
 # Google Assistant Demo
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
+[Test this application for free on Heroku](https://heroku.com/deploy)
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 This project is a small demo on how you can use data from Trafiklab.org, with the help of the Trafiklab PHP SDKs, 
@@ -17,19 +19,28 @@ The project is based on Laravel Lumen. It requires PHP 7.1 or higher on the host
 ## Installation
 
 ### DialogFlow
+
 The DialogFlow project which is used to link Google Assistant has been exported to 
-[a zip file](https://raw.githubusercontent.com/trafiklab/google-assistant-demo/master/dialogflow-stockholm-public-transport.zip), 
-and can be downloaded and imported to your own DialogFlow project. 
+[a zip file](https://raw.githubusercontent.com/trafiklab/google-assistant-demo/master/docs/dialogflow-stockholm-public-transport.zip), 
+and can be downloaded and imported to your own DialogFlow project. In order to do this, you need to create a new agent first.
+After creating a new agent, you click the gear wheal in the top left, next to your agent name.
+
+![Dialogflow settings](https://raw.githubusercontent.com/trafiklab/google-assistant-demo/master/docs/dialogflow-settings.png)
+
+After going to the settings, choose the Export and Import tab. Choose `Restore from zip` to clone the project from the zip file.
 Read [the dialogflow docs](https://dialogflow.com/docs/agents/export-import-restore) for more information.
  
  
 ### Webhook
-In order to deploy your webhook, you can use Heroku as a free and easy hosting service. This repository already contains the needed
-configuration. [A good tutorial on how you can deploy to Heroku can be found here](https://github.com/dwyl/learn-heroku),
- or you can read read the official documentation(https://devcenter.heroku.com/articles/github-integration).
+In order to deploy your webhook, you can use Heroku as a free and easy hosting service. This repository already contains 
+the needed configuration. [A good tutorial on how you can deploy to Heroku can be found here](https://github.com/dwyl/learn-heroku),
+ or you can read read [the official documentation](https://devcenter.heroku.com/articles/github-integration).
  
 If you choose to host this project yourself, download the project to the location and run `composer install`. When configuring
  the web server, you need to use `/public` as the root directory of the project.
+
+Ensure that you update your DialogFlow project with the correct fulfillment URL. This is the URL to which dialogflow will send
+its requests.
 
 ## Forking, reporting issues and creating pull requests
 
