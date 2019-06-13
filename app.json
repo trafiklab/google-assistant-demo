@@ -1,0 +1,50 @@
+{
+  "name": "Trafiklab DialogFlow/Google Assistant Demo",
+  "description": "A demo application showing how to use the Trafiklab SDKs to build a Google Assistant application",
+  "keywords": [
+    "Trafiklab",
+    "Google Assistant",
+    "DialogFlow"
+  ],
+  "website": "https://trafiklab.se",
+  "repository": "https://github.com/trafiklab/google-assistant-demo",
+  "logo": "https://avatars2.githubusercontent.com/u/6614637?s=200&v=4",
+  "env": {
+    "APP_DATAPROVIDER": {
+      "description": "The data provider to use. Choose between 'SL' or 'RESROBOT' without the ''.",
+      "required": true
+    },
+    "RESROBOT_TIMETABLE_KEY": {
+      "description": "Your API key for the Trafiklab ResRobot - Stolptidtabeller 2 API. You can leave this empty, but some features may not work.",
+      "required": true
+    },
+    "RESROBOT_ROUTEPLANNING_KEY": {
+      "description": "Your API key for the Trafiklab ResRobot Reseplanerare API. You can leave this empty, but some features may not work.",
+      "required": true
+    },
+    "SL_TIMETABLE_KEY": {
+      "description": "Your API key for the Trafiklab SL Realtidsinformation 4 API. You can leave this empty, but some features may not work.",
+      "required": true
+    },
+    "SL_ROUTEPLANNING_KEY": {
+      "description": "Your API key for the Trafiklab SL Reseplanerare 3.1 API. You can leave this empty, but some features may not work.",
+      "required": true
+    },
+    "SL_STATIONLOOKUP_KEY": {
+      "description": "Your API key for the Trafiklab SL Platsuppslag API. You can leave this empty, but some features may not work.",
+      "required": true
+    },
+    "LOG_CHANNEL": {
+      "description": "This option is required to redirect log output to Heroku.",
+      "value": "errorlog"
+    },
+    "APP_USER_AGENT": {
+      "description": "The user agent to use when making requests to Trafiklab.",
+      "value": "Google-Assistant-Demo"
+    },
+    "APP_NAME": {
+      "description": "The name for your app.",
+      "value": "Google-Assistant-Demo"
+    }
+  }
+}
