@@ -1,6 +1,8 @@
 # Google Assistant Demo
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 This project is a small demo on how you can use data from Trafiklab.org, with the help of the Trafiklab PHP SDKs, 
 and use it to create a Google Assistant bot with the help of DialogFlow.
 
