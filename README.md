@@ -25,7 +25,7 @@ The DialogFlow project which is used to link Google Assistant has been exported 
 and can be downloaded and imported to your own DialogFlow project. In order to do this, you need to create a new agent first.
 After creating a new agent, you click the gear wheal in the top left, next to your agent name.
 
-![Dialogflow settings](https://raw.githubusercontent.com/trafiklab/google-assistant-demo/master/docs/dialogflow-settings.png)
+![Dialogflow settings](docs/dialogflow-settings.png)
 
 After going to the settings, choose the Export and Import tab. Choose `Restore from zip` to clone the project from the zip file.
 Read [the dialogflow docs](https://dialogflow.com/docs/agents/export-import-restore) for more information.
