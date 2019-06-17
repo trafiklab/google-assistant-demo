@@ -87,7 +87,7 @@ class DialogFlowController extends BaseController
      */
     public function redirectIntentToController()
     {
-        switch ($this->_dialogFlowPayload->getIntentDisplayName()) {
+        switch ($this->_dialogFlowPayload->getAction()) {
             case 'next-departure':
                 // There are likely nicer options to do this, and definitely a more efficient one,
                 // but it ain't stupid if it works
@@ -100,7 +100,7 @@ class DialogFlowController extends BaseController
                 return $controller->getRoutePlanning();
             default:
                 return self::createTextToSpeechResponse(
-                    "I can only tell you about the next departures or plan routes for you");
+                    "I can only tell you about the next departures or plan routes for you.");
         }
     }
 

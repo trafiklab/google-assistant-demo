@@ -26,8 +26,7 @@ After creating a new agent, you click the gear wheal in the top left, next to yo
 ![Dialogflow settings](docs/dialogflow-settings.png)
 
 After going to the settings, choose the Export and Import tab. Choose `Restore from zip` to clone the project from the zip file.
-Read [the dialogflow docs](https://dialogflow.com/docs/agents/export-import-restore) for more information.
- 
+Read [the dialogflow docs](https://dialogflow.com/docs/agents/export-import-restore) for more information. 
  
 ### Webhook
 In order to deploy your webhook, you can use Heroku as a free and easy hosting service. This repository already contains 
@@ -45,6 +44,23 @@ If you choose to host this project yourself, download the project to the locatio
 Ensure that you update your DialogFlow project with the correct fulfillment URL. This is the URL to which dialogflow will send
 its requests. You can change this by going to [the DialogFlow console](https://console.dialogflow.com), and going to the fulfillment page for your agent. The domain
 there should correspond with your own domain, or the one generated for your Heroku project.
+
+## Usage
+Send requests from DialogFlow to the `/dialogflow/intent/handle` endpoint.
+Supported intents:
+- `next-departure` to get the next departures from a stop, with parameters:
+    - `transportation-method`: bust, tram, train, metro, ferry
+    - `location`: stop location name
+    
+- `plan-route` to plan a route from A to B, with parameters:
+    - `origin`: Origin stop location name
+    - `destination`: Destination stop location name
+    
+When using your own DialogFlow agen, ensure that both the intent action (for example `plan-route`) and parameters are 
+correctly configured in your agent. If they are not correctly configured, the intent will not be recognized correctly.
+An example configuration can be seen in the image below.
+
+![Dialogflow action and parameters](docs/dialogflow-action-parameters.png)
 
 ## Forking, reporting issues and creating pull requests
 

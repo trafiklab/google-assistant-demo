@@ -61,8 +61,7 @@ class RoutePlanningController extends DialogFlowController
 
             // In case no result was found, we tell this to user.
             if (count($response->getTrips()) == 0) {
-                return $this->createTextToSpeechResponse("I could not find any route " . strtolower($this->getDialogFlowPayload()->getParameter("transportation-method")) .
-                    " from " . $origin->getName() . " to " . $destination->getName());
+                return $this->createTextToSpeechResponse("I could not find any route from " . $origin->getName() . " to " . $destination->getName());
             }
 
             // We will tell the user about the first found result
