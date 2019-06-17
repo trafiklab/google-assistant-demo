@@ -1,8 +1,6 @@
 # Google Assistant Demo
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
-[Test this application for free on Heroku](https://heroku.com/deploy)
-
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 This project is a small demo on how you can use data from Trafiklab.org, with the help of the Trafiklab PHP SDKs, 
@@ -33,14 +31,20 @@ Read [the dialogflow docs](https://dialogflow.com/docs/agents/export-import-rest
  
 ### Webhook
 In order to deploy your webhook, you can use Heroku as a free and easy hosting service. This repository already contains 
-the needed configuration. [A good tutorial on how you can deploy to Heroku can be found here](https://github.com/dwyl/learn-heroku),
- or you can read read [the official documentation](https://devcenter.heroku.com/articles/github-integration).
+the needed configuration. If you want to set up everything automatically, you can do so by clicking the deploy button on top of
+this readme, or by clicking [here](https://heroku.com/deploy). 
+
+If you want to set-up automatic deploys for a fork of this application, we have written 
+[a tutorial on heruku](https://trafiklab.github.io/blog/heroku-free-hosting-with-automatic-deploy/), 
+[another good tutorial on how you can deploy to Heroku can be found here](https://github.com/dwyl/learn-heroku), 
+or you can read read [the official documentation](https://devcenter.heroku.com/articles/github-integration).
  
 If you choose to host this project yourself, download the project to the location and run `composer install`. When configuring
  the web server, you need to use `/public` as the root directory of the project.
 
 Ensure that you update your DialogFlow project with the correct fulfillment URL. This is the URL to which dialogflow will send
-its requests.
+its requests. You can change this by going to [the DialogFlow console](https://console.dialogflow.com), and going to the fulfillment page for your agent. The domain
+there should correspond with your own domain, or the one generated for your Heroku project.
 
 ## Forking, reporting issues and creating pull requests
 

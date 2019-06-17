@@ -37,5 +37,6 @@ $router->post('/dialogflow/intent/handle', [
 );
 
 $router->get('/', function () {
-    return 'Hello World! ' . env("APP_NAME")  . ' is up and running!';
+    return 'Hello World! ' . env("APP_NAME") . ' is up and running! Use "' . route('redirectIntent')
+        . " as your fulfillment URL in DialogFlow";
 });
