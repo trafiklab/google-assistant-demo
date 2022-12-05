@@ -35,7 +35,7 @@ class DialogFlowController extends BaseController
     public static function createTextToSpeechResponse(?DialogflowRequest $request, string $responseText, bool $isEndOfConversation = true): JsonResponse
     {
         if ($request && $request->isSwedishRequest()) {
-            $responseText = str_replace(['train', 'metro', 'boat', 'tram'], ['tåg', 'tunnelbana', 'båt', 'spårvagn'], $responseText);
+            $responseText = str_replace(['train', 'bus', 'metro', 'boat', 'tram'], ['tåg', 'buss', 'tunnelbana', 'båt', 'spårvagn'], $responseText);
         }
         return response()->json(self::buildDialogFlowResponse($responseText));
     }
