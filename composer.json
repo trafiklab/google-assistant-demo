@@ -5,20 +5,21 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.1.3",
-        "laravel/lumen-framework": "5.8.*",
-        "trafiklab/resrobot-php-sdk": "~1.0.0",
-        "trafiklab/sl-php-sdk": "~1.0.0",
-        "vlucas/phpdotenv": "^3.3",
+        "php": ">=8.1.0",
+        "laravel/lumen-framework": "9.*",
+        "trafiklab/resrobot-php-sdk": "~2.1.0",
+        "trafiklab/sl-php-sdk": ">1",
+        "vlucas/phpdotenv": "^5.4",
+        "laravel/legacy-factories": "^1.3.0",
       "ext-json": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
-        "phpunit/phpunit": "^7.0",
+        "phpunit/phpunit": "^9.0",
         "mockery/mockery": "^1.0",
         "squizlabs/php_codesniffer": "^3.4",
         "phpmd/phpmd": "^2.6.0",
-        "friendsofphp/php-cs-fixer": "^2.14"
+        "friendsofphp/php-cs-fixer": "^3.13"
     },
     "autoload": {
         "classmap": [
