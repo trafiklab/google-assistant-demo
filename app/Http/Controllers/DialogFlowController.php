@@ -7,11 +7,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\DialogFlowPayload;
 use App\Http\Requests\DialogflowRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 /**
@@ -29,12 +26,17 @@ class DialogFlowController extends BaseController
     /**
      * Send a JSON response to DialogFlow in order to make google assistant answer the question.
      *
+     * @param DialogflowRequest $request
      * @param string $responseText
+     * @param bool $isEndOfConversation
      *
      * @return JsonResponse Json reply for DialogFlow.
      */
-    public static function createTextToSpeechResponse(string $responseText, bool $isEndOfConversation = true)
+    public static function createTextToSpeechResponse(?DialogflowRequest $request, string $responseText, bool $isEndOfConversation = true): JsonResponse
     {
+        if ($request && $request->isSwedishRequest()) {
+            $responseText = str_replace(['train', 'metro', 'boat', 'tram'], ['tåg', 'tunnelbana', 'båt', 'spårvagn'], $responseText);
+        }
         return response()->json(self::buildDialogFlowResponse($responseText));
     }
 
@@ -42,7 +44,7 @@ class DialogFlowController extends BaseController
      * Build an array with the necessary
      *
      * @param string $responseText        The text which should be spoken by, for example, Google Assistant.
-     * @param bool   $isEndOfConversation Determines if this is the end of a conversation. If true, the assistant will
+     * @param bool $isEndOfConversation   Determines if this is the end of a conversation. If true, the assistant will
      *                                    go to sleep after speaking. If false, the assistant will keep listening for
      *                                    more questions.
      *
@@ -54,7 +56,7 @@ class DialogFlowController extends BaseController
             'payload' => [
                 'google' => [
                     'expectUserResponse' => $isEndOfConversation,
-                    "richResponse" => [
+                    "richResponse"       => [
                         "items" => [
                             [
                                 "simpleResponse" => [
@@ -90,7 +92,7 @@ class DialogFlowController extends BaseController
                 $controller = new RoutePlanningController();
                 return $controller->getRoutePlanning($request);
             default:
-                return self::createTextToSpeechResponse(
+                return self::createTextToSpeechResponse($request,
                     "I can only tell you about the next departures or plan routes for you.");
         }
     }

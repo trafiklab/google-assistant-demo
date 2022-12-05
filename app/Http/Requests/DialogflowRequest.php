@@ -33,4 +33,9 @@ class DialogflowRequest extends Request
     {
         return $this->_dialogFlowPayload->getLanguageCode();
     }
+
+    public function isSwedishRequest(): bool
+    {
+        return str_contains($this->getLanguageCode(), 'sv');
+    }
 }

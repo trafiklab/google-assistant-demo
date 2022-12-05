@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Throwable;
 use App\Http\Controllers\DialogFlowController;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -35,8 +36,9 @@ class Handler extends ExceptionHandler
      * @param Throwable $exception
      *
      * @return void
+     * @throws Exception
      */
-    public function report(Throwable $exception)
+    public function report(Throwable $exception): void
     {
         parent::report($exception);
     }
@@ -52,6 +54,6 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         error_log($exception);
-        return DialogFlowController::createTextToSpeechResponse("I could not fulfill your request. Someone maybe forgot a comma somewhere. The exact problem lies in " . $exception->getFile() . ": " . $exception->getMessage() . ".");
+        return DialogFlowController::createTextToSpeechResponse(null, 'I could not fulfill your request. Someone maybe forgot a comma somewhere. The exact problem lies in ' . $exception->getFile() . ': ' . $exception->getMessage() . '.');
     }
 }

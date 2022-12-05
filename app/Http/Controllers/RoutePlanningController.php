@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DialogflowRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
 use Trafiklab\Common\Model\Contract\StopLocationLookupEntry;
@@ -26,7 +27,7 @@ class RoutePlanningController extends DialogFlowController
 {
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function getRoutePlanning(DialogflowRequest $request)
     {
@@ -53,14 +54,18 @@ class RoutePlanningController extends DialogFlowController
 
             // In case no result was found, we tell this to user.
             if (count($response->getTrips()) == 0) {
-                return $this->createTextToSpeechResponse("I could not find any route from " . $origin->getName() . " to " . $destination->getName());
+                return $request->isSwedishRequest()
+                    ? $this->createTextToSpeechResponse($request,'Jag kunde inte hitta ett reseförslag från ' . $origin->getName() . ' till ' . $destination->getName())
+                    : $this->createTextToSpeechResponse($request,'I could not find any route from ' . $origin->getName() . ' to ' . $destination->getName());
             }
 
             // We will tell the user about the first found result
             $routePlan = $response->getTrips()[0];
 
             // Start building the response.
-            $responseText = "I found you the following route from {$origin->getName()} to {$destination->getName()}. " . PHP_EOL;
+            $responseText = $request->isSwedishRequest()
+                ? "Jag hittade följande reseförslag från {$origin->getName()} till {$destination->getName()}. " . PHP_EOL
+                : "I found you the following route from {$origin->getName()} to {$destination->getName()}. " . PHP_EOL;
 
             // Tell the user about every leg in their journey.
             foreach ($routePlan->getLegs() as $i => $leg) {
@@ -70,26 +75,40 @@ class RoutePlanningController extends DialogFlowController
 
                 if ($leg->getType() == RoutePlanningLegType::VEHICLE_JOURNEY) {
                     // The user needs to take a train/bus/...
-                    $responseText .= $this->getStartOfSentence($i, $routePlan, "take");
+                    $responseText .= $this->getStartOfSentence($request, $i, $routePlan, $request->isSwedishRequest() ? 'åk' : 'take');
 
-                    // Explain when, from where, to where.
-                    $responseText .= strtolower($leg->getVehicle()->getType())
-                        . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} "
-                        . "from {$leg->getDeparture()->getStopName()} "
-                        . "at {$leg->getDeparture()->getScheduledDepartureTime()->format("H:i")}. " . PHP_EOL;
-                    $responseText .= "Ride along for " . ($leg->getDuration()) / 60 . " minutes, then ";
-                    $responseText .= "exit the vehicle in " . $leg->getArrival()->getStopName() . ". " . PHP_EOL;
+                    if ($request->isSwedishRequest()) {
+                        // Explain when, from where, to where.
+                        $responseText .= strtolower($leg->getVehicle()->getType())
+                            . " {$leg->getVehicle()->getNumber()} mot {$leg->getDirection()} "
+                            . "från {$leg->getDeparture()->getStopName()} "
+                            . "klockan {$leg->getDeparture()->getScheduledDepartureTime()->format('H:i')}. " . PHP_EOL;
+                        $responseText .= 'Åk med i ' . ($leg->getDuration()) / 60 . ' minuter, sen ';
+                        $responseText .= 'kliv av i ' . $leg->getArrival()->getStopName() . '. ' . PHP_EOL;
+                    } else {
+                        // Explain when, from where, to where.
+                        $responseText .= strtolower($leg->getVehicle()->getType())
+                            . " {$leg->getVehicle()->getNumber()} towards {$leg->getDirection()} "
+                            . "from {$leg->getDeparture()->getStopName()} "
+                            . "at {$leg->getDeparture()->getScheduledDepartureTime()->format('H:i')}. " . PHP_EOL;
+                        $responseText .= 'Ride along for ' . ($leg->getDuration()) / 60 . ' minutes, then ';
+                        $responseText .= 'exit the vehicle in ' . $leg->getArrival()->getStopName() . '. ' . PHP_EOL;
+                    }
+
 
                 } else {
                     if ($leg->getType() == RoutePlanningLegType::WALKING) {
                         // The user needs to walk. We will simply say from where, to where.
-                        $responseText .= $this->getStartOfSentence($i, $routePlan, "walk");
+                        $responseText .= $this->getStartOfSentence($request, $i, $routePlan, $request->isSwedishRequest() ? 'gå' : 'walk');
                         $responseText .= "from {$leg->getDeparture()->getStopName()} to {$leg->getArrival()->getStopName()}" . PHP_EOL;
+                        $responseText .= $request->isSwedishRequest()
+                            ? "från {$leg->getDeparture()->getStopName()} till {$leg->getArrival()->getStopName()}" . PHP_EOL
+                            : "from {$leg->getDeparture()->getStopName()} to {$leg->getArrival()->getStopName()}" . PHP_EOL;
                     }
                 }
             }
-            $responseText .= "You have then arrived at your destination.";
-            return $this->createTextToSpeechResponse($responseText);
+            $responseText .= 'You have then arrived at your destination.';
+            return $this->createTextToSpeechResponse($request,$responseText);
 
 
             /**
@@ -107,23 +126,23 @@ class RoutePlanningController extends DialogFlowController
              * InvalidKeyExceptions, InvalidStopLocationException, ... due to their hierarchy/inheritance.
              **/
         } catch (InvalidKeyException|KeyRequiredException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I don't have the right keys");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,"I would like to answer you, but I don't have the right keys");
         } catch (InvalidStoplocationException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but don't know that station");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,"I would like to answer you, but don't know that station");
         } catch (InvalidRequestException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I didn't get all  the details");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,"I would like to answer you, but I didn't get all  the details");
         } catch (QuotaExceededException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I already talked too much");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,'I would like to answer you, but I already talked too much');
         } catch (RequestTimedOutException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I could not obtain this data, it took too long");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,'I could not obtain this data, it took too long');
         } catch (ServiceUnavailableException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I could not obtain this data, the service is not available");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,'I could not obtain this data, the service is not available');
         }
     }
 
@@ -163,22 +182,24 @@ class RoutePlanningController extends DialogFlowController
      *
      * @return string The start of the sentence for the $legIndexInTrip-th leg in the trip
      */
-    public function getStartOfSentence(int $legIndexInTrip, Trip $trip, string $action): string
+    public function getStartOfSentence(DialogflowRequest $request, int $legIndexInTrip, Trip $trip, string $action): string
     {
         if ($legIndexInTrip == 0) {
             if (count($trip->getLegs()) == 1) {
                 // If there is only one leg, there is no need for first...then..
                 // ucfirst will uppercase the first character.
-                $fancyContinuation = ucfirst($action) . " ";
+                return ucfirst($action) . ' ';
             } else {
                 // This is the first leg in the trip, so we start with First ...
-                $fancyContinuation = "First $action ";
+                if ($request->isSwedishRequest()) {
+                    return "Först, $action";
+                }
+                return "First $action ";
             }
         } else {
             // This is not the first leg in the trip, so we continue our response with Then ...
-            $fancyContinuation = "Then $action ";
+            return "Then $action ";
         }
-        return $fancyContinuation;
     }
 
 

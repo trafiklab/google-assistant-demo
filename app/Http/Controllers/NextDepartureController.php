@@ -8,8 +8,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DialogflowRequest;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
+use Trafiklab\Common\Model\Contract\StopLocationLookupResponse;
 use Trafiklab\Common\Model\Contract\TimeTableEntry;
 use Trafiklab\Common\Model\Enum\TimeTableType;
 use Trafiklab\Common\Model\Exceptions\InvalidKeyException;
@@ -33,9 +36,9 @@ class NextDepartureController extends DialogFlowController
     /**
      * Answer a question for the next departure of a bus/train/... from a certain stop.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function getNextDeparture(DialogflowRequest $request)
+    public function getNextDeparture(DialogflowRequest $request): JsonResponse
     {
         /**
          * Retrieve an instance of PublicTransportApiWrapper. This instance is configured in AppServiceProvider.php.
@@ -61,12 +64,12 @@ class NextDepartureController extends DialogFlowController
             try {// Make the request.
                 Log::info("Looking up $locationName");
                 $stopLookupResponse = $apiWrapper->lookupStopLocation($stopLookupRequest);
-            } catch (\Exception $e) {
-                return $this->createTextToSpeechResponse("I could not find any departures from the stop or station '$locationName'.");
+            } catch (Exception $e) {
+                return $this->createTextToSpeechResponse($request,"I could not find any departures from the stop or station '$locationName'.");
             }
 
             if (count($stopLookupResponse->getFoundStopLocations()) < 1) {
-                return $this->createTextToSpeechResponse("There are no departures from the stop or station '$locationName'.");
+                return $this->createTextToSpeechResponse($request,"There are no departures from the stop or station '$locationName'.");
             }
             // Get the Id of the first result.
             // TODO: This can be smarter! We know the type of transport the user wants to take.
@@ -88,20 +91,20 @@ class NextDepartureController extends DialogFlowController
              */
             // Get the transportation method from DialogFlow, and convert it to uppercase. By converting to uppercase,
             // we can compare it to the transportType field in every timeTableEntry object.
-            $transportType = strToUpper($request->getDialogFlowPayload()->getParameter("transportation-method"));
+            $transportType = strToUpper($request->getDialogFlowPayload()->getParameter('transportation-method'));
 
             // Loop through all departures
             foreach ($response->getTimetable() as $timeTableEntry) {
                 // If a matching type of transport is found, create an answer and send it back
                 if ($timeTableEntry->getTransportType() == $transportType) // Create a response
                 {
-                    return $this->createTextToSpeechResponse($this->buildNextDepartureResponseText($request, $timeTableEntry));
+                    return $this->createTextToSpeechResponse($request,$this->buildNextDepartureResponseText($request, $timeTableEntry));
                 }
             }
             // We only reach this point if no matching type of transport was found. We return a default reply
             // about not being able to find a response.
             // Another option would be to search further in time.
-            return $this->createTextToSpeechResponse($this->buildTransportModeNotFoundText($request, $stopLookupResponse));
+            return $this->createTextToSpeechResponse($request,$this->buildTransportModeNotFoundText($request, $stopLookupResponse));
 
             /**
              *  Exception handling starts here
@@ -118,23 +121,23 @@ class NextDepartureController extends DialogFlowController
              * InvalidKeyExceptions, InvalidStopLocationException, ... due to their hierarchy/inheritance.
              **/
         } catch (InvalidKeyException|KeyRequiredException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I don't have the right keys");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,"I would like to answer you, but I don't have the right keys");
         } catch (InvalidStoplocationException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but don't know that station");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,"I would like to answer you, but don't know that station");
         } catch (QuotaExceededException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I already talked too much");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,'I would like to answer you, but I already talked too much');
         } catch (RequestTimedOutException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I could not obtain this data, it took too long");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,'I could not obtain this data, it took too long');
         } catch (InvalidRequestException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I didn't get all the details");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,"I would like to answer you, but I didn't get all the details");
         } catch (ServiceUnavailableException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I could not obtain this data, the service is not available");
+            Log::error($e->getMessage() . ' at ' . $e->getFile() . ' : ' . $e->getLine());
+            return $this->createTextToSpeechResponse($request,'I could not obtain this data, the service is not available');
         }
     }
 
@@ -148,37 +151,37 @@ class NextDepartureController extends DialogFlowController
      */
     public function buildNextDepartureResponseText(DialogflowRequest $request, TimeTableEntry $timeTableEntry): string
     {
-        if (str_contains($request->getLanguageCode(), 'sv')) {
-            return "Nästa " . strtolower($timeTableEntry->getTransportType()) . " "
+        if ($request->isSwedishRequest()) {
+            return 'Nästa ' . strtolower($timeTableEntry->getTransportType()) . ' '
                 . "som avgår från {$timeTableEntry->getStopName()} är "
                 . strtolower($timeTableEntry->getTransportType())
                 . " {$timeTableEntry->getLineNumber()} mot {$timeTableEntry->getDirection()} "
-                . "klockan {$timeTableEntry->getScheduledStopTime()->format("H:i")}";
+                . "klockan {$timeTableEntry->getScheduledStopTime()->format('H:i')}";
         }
-        return "The next " . strtolower($timeTableEntry->getTransportType()) . " "
+        return 'The next ' . strtolower($timeTableEntry->getTransportType()) . ' '
             . "from {$timeTableEntry->getStopName()} is "
             . strtolower($timeTableEntry->getTransportType())
             . " {$timeTableEntry->getLineNumber()} to {$timeTableEntry->getDirection()} "
-            . "at {$timeTableEntry->getScheduledStopTime()->format("H:i")}";
+            . "at {$timeTableEntry->getScheduledStopTime()->format('H:i')}";
     }
 
     /**
      * @param DialogflowRequest $request
-     * @param \Trafiklab\Common\Model\Contract\StopLocationLookupResponse $stopLookupResponse
+     * @param StopLocationLookupResponse $stopLookupResponse
      *
      * @return string
      */
-    public function buildTransportModeNotFoundText(DialogflowRequest $request, \Trafiklab\Common\Model\Contract\StopLocationLookupResponse $stopLookupResponse): string
+    public function buildTransportModeNotFoundText(DialogflowRequest $request, StopLocationLookupResponse $stopLookupResponse): string
     {
-        if (str_contains($request->getLanguageCode(), 'sv')) {
+        if ($request->isSwedishRequest()) {
             return
-                "Jag kunde inte hitta någon "
-                . strtolower($request->getDialogFlowPayload()->getParameter("transportation-method"))
-                . " som avgår från " . $stopLookupResponse->getFoundStopLocations()[0]->getName();
+                'Jag kunde inte hitta någon '
+                . strtolower($request->getDialogFlowPayload()->getParameter('transportation-method'))
+                . ' som avgår från ' . $stopLookupResponse->getFoundStopLocations()[0]->getName();
         }
         return
-            "I could not find any "
-            . strtolower($request->getDialogFlowPayload()->getParameter("transportation-method"))
-            . " departing from " . $stopLookupResponse->getFoundStopLocations()[0]->getName();
+            'I could not find any '
+            . strtolower($request->getDialogFlowPayload()->getParameter('transportation-method'))
+            . ' departing from ' . $stopLookupResponse->getFoundStopLocations()[0]->getName();
     }
 }
