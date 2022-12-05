@@ -107,7 +107,9 @@ class RoutePlanningController extends DialogFlowController
                     }
                 }
             }
-            $responseText .= 'You have then arrived at your destination.';
+            $responseText .= $request->isSwedishRequest()
+                ? 'Du har då kommit fram till ditt resmål.'
+                : 'You have then arrived at your destination.';
             return $this->createTextToSpeechResponse($request,$responseText);
 
 
