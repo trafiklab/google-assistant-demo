@@ -57,8 +57,13 @@ class NextDepartureController extends DialogFlowController
             $stopLookupRequest = $apiWrapper->createStopLocationLookupRequestObject();
             // Set the station name we want to resolve.
             $stopLookupRequest->setSearchQuery($locationName);
-            // Make the request.
-            $stopLookupResponse = $apiWrapper->lookupStopLocation($stopLookupRequest);
+
+            try {// Make the request.
+                Log::info("Looking up $locationName");
+                $stopLookupResponse = $apiWrapper->lookupStopLocation($stopLookupRequest);
+            } catch (\Exception $e) {
+                return $this->createTextToSpeechResponse("I could not find any departures from the stop or station '$locationName'.");
+            }
 
             if (count($stopLookupResponse->getFoundStopLocations()) < 1) {
                 return $this->createTextToSpeechResponse("There are no departures from the stop or station '$locationName'.");
@@ -126,7 +131,7 @@ class NextDepartureController extends DialogFlowController
             return $this->createTextToSpeechResponse("I could not obtain this data, it took too long");
         } catch (InvalidRequestException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I didn't get all  the details");
+            return $this->createTextToSpeechResponse("I would like to answer you, but I didn't get all the details");
         } catch (ServiceUnavailableException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->createTextToSpeechResponse("I could not obtain this data, the service is not available");
