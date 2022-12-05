@@ -6,6 +6,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DialogflowRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
@@ -22,21 +23,11 @@ use Trafiklab\Common\Model\Exceptions\ServiceUnavailableException;
 
 class RoutePlanningController extends DialogFlowController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        Log::info("RoutePlanning controller constructing.");
-        parent::__construct($request);
-    }
 
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getRoutePlanning()
+    public function getRoutePlanning(DialogflowRequest $request)
     {
         try {
             /**
@@ -47,9 +38,9 @@ class RoutePlanningController extends DialogFlowController
             // Use a StopLocationLookup (Platsuppslag) API to get the ids of the origin and destination stop.
             // Since we need to lookup multiple stop locations, a method was created to do this.
             $origin = $this->getStopLocation($apiWrapper,
-                $this->getDialogFlowPayload()->getParameter('origin'));
+                $request->getDialogFlowPayload()->getParameter('origin'));
             $destination = $this->getStopLocation($apiWrapper,
-                $this->getDialogFlowPayload()->getParameter('destination'));
+                $request->getDialogFlowPayload()->getParameter('destination'));
 
             // Create a new RoutePlanningRequest object.
             $routePlanningRequest = $apiWrapper->createRoutePlanningRequestObject();
@@ -112,15 +103,12 @@ class RoutePlanningController extends DialogFlowController
              * The order of catching Exceptions is important. Catching InvalidRequestExceptions first will also catch
              * InvalidKeyExceptions, InvalidStopLocationException, ... due to their hierarchy/inheritance.
              **/
-        } catch (InvalidKeyException $e) {
+        } catch (InvalidKeyException|KeyRequiredException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->createTextToSpeechResponse("I would like to answer you, but I don't have the right keys");
         } catch (InvalidStoplocationException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->createTextToSpeechResponse("I would like to answer you, but don't know that station");
-        } catch (KeyRequiredException $e) {
-            Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
-            return $this->createTextToSpeechResponse("I would like to answer you, but I don't have the right keys");
         } catch (InvalidRequestException $e) {
             Log::error($e->getMessage() . " at " . $e->getFile() . " : " . $e->getLine());
             return $this->createTextToSpeechResponse("I would like to answer you, but I didn't get all  the details");

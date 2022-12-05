@@ -8,6 +8,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\DialogFlowPayload;
+use App\Http\Requests\DialogflowRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -24,16 +25,6 @@ use Laravel\Lumen\Routing\Controller as BaseController;
  */
 class DialogFlowController extends BaseController
 {
-
-    private $_dialogFlowPayload;
-    private $_request;
-
-    public function __construct(Request $request)
-    {
-        Log::info("DialogFlowController constructing. POST Payload: " . $request->getContent());
-        $this->_request = $request;
-        $this->_dialogFlowPayload = new DialogFlowPayload(json_decode($request->getContent(), true));
-    }
 
     /**
      * Send a JSON response to DialogFlow in order to make google assistant answer the question.
@@ -83,34 +74,24 @@ class DialogFlowController extends BaseController
      * Depending on their payload, a controller class of the right type is created to answer the query.
      * We can't use redirects here, as the incoming DialogFlow request is a POST request, and we need to keep the body.
      *
-     * @return JsonResponse
+     * @noinspection PhpUnused
      */
-    public function redirectIntentToController()
+    public function redirectIntentToController(DialogflowRequest $request): JsonResponse
     {
-        switch ($this->_dialogFlowPayload->getAction()) {
+        switch ($request->_dialogFlowPayload->getAction()) {
             case 'next-departure':
                 // There are likely nicer options to do this, and definitely a more efficient one,
                 // but it ain't stupid if it works
-                $controller = new NextDepartureController($this->_request);
-                return $controller->getNextDeparture();
+                $controller = new NextDepartureController();
+                return $controller->getNextDeparture($request);
             case 'plan-route':
                 // There are likely nicer options to do this, and definitely a more efficient one,
                 // but it ain't stupid if it works
-                $controller = new RoutePlanningController($this->_request);
-                return $controller->getRoutePlanning();
+                $controller = new RoutePlanningController();
+                return $controller->getRoutePlanning($request);
             default:
                 return self::createTextToSpeechResponse(
                     "I can only tell you about the next departures or plan routes for you.");
         }
-    }
-
-    /**
-     * Get the payload sent to the server by DialogFlow.
-     *
-     * @return DialogFlowPayload
-     */
-    public function getDialogFlowPayload(): DialogFlowPayload
-    {
-        return $this->_dialogFlowPayload;
     }
 }

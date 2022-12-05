@@ -16,13 +16,14 @@ namespace App\Http\Models;
  */
 class DialogFlowPayload
 {
-    private $_conversationId;
-    private $_intentDisplayName;
-    private $_intentName;
-    private $_containsAllRequiredParameters;
-    private $_parameters;
-    private $_action;
-    private $_queryText;
+    private string $_conversationId;
+    private string $_intentDisplayName;
+    private string $_intentName;
+    private bool $_containsAllRequiredParameters;
+    private array $_parameters;
+    private string $_action;
+    private string $_queryText;
+    private string $_languageCode;
 
     /**
      * Create an instance of DialogFlowPayload from POST data received from Google DialogFlow.
@@ -33,6 +34,7 @@ class DialogFlowPayload
     {
         $this->_queryText = $payload['queryResult']['queryText'];
         $this->_action = $payload['queryResult']['action'];
+        $this->_languageCode = $payload['queryResult']['languageCode'];
         $this->_parameters = $payload['queryResult']['parameters'];
         $this->_containsAllRequiredParameters = $payload['queryResult']['allRequiredParamsPresent'];
         $this->_intentName = $payload['queryResult']['intent']['name'];
@@ -120,5 +122,13 @@ class DialogFlowPayload
     public function getQueryText(): string
     {
         return $this->_queryText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguageCode(): string
+    {
+        return $this->_languageCode;
     }
 }
