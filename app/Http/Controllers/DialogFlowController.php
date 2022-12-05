@@ -78,7 +78,7 @@ class DialogFlowController extends BaseController
      */
     public function redirectIntentToController(DialogflowRequest $request): JsonResponse
     {
-        switch ($request->_dialogFlowPayload->getAction()) {
+        switch ($request->getDialogFlowPayload()->getAction()) {
             case 'next-departure':
                 // There are likely nicer options to do this, and definitely a more efficient one,
                 // but it ain't stupid if it works

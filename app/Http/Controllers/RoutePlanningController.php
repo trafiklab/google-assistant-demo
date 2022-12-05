@@ -2,12 +2,13 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
- */ /** @noinspection PhpCSValidationInspection */
+ */
+
+/** @noinspection PhpCSValidationInspection */
 
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DialogflowRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Trafiklab\Common\Model\Contract\PublicTransportApiWrapper;
 use Trafiklab\Common\Model\Contract\StopLocationLookupEntry;
@@ -79,10 +80,12 @@ class RoutePlanningController extends DialogFlowController
                     $responseText .= "Ride along for " . ($leg->getDuration()) / 60 . " minutes, then ";
                     $responseText .= "exit the vehicle in " . $leg->getArrival()->getStopName() . ". " . PHP_EOL;
 
-                } else if ($leg->getType() == RoutePlanningLegType::WALKING) {
-                    // The user needs to walk. We will simply say from where, to where.
-                    $responseText .= $this->getStartOfSentence($i, $routePlan, "walk");
-                    $responseText .= "from {$leg->getDeparture()->getStopName()} to {$leg->getArrival()->getStopName()}" . PHP_EOL;
+                } else {
+                    if ($leg->getType() == RoutePlanningLegType::WALKING) {
+                        // The user needs to walk. We will simply say from where, to where.
+                        $responseText .= $this->getStartOfSentence($i, $routePlan, "walk");
+                        $responseText .= "from {$leg->getDeparture()->getStopName()} to {$leg->getArrival()->getStopName()}" . PHP_EOL;
+                    }
                 }
             }
             $responseText .= "You have then arrived at your destination.";
@@ -129,7 +132,7 @@ class RoutePlanningController extends DialogFlowController
      *
      * @param PublicTransportApiWrapper $apiWrapper
      *
-     * @param string                    $id
+     * @param string $id
      *
      * @return StopLocationLookupEntry
      * @throws InvalidKeyException
